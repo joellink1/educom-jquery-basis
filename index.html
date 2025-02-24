@@ -6,15 +6,43 @@
     <script>
       $(document).ready( function() {
 
-        $("#btn").click(function() {
-          $(".window").fadeToggle()
+        $(".star").click(function() {
+          const value = $(this).attr('data-value')
+
+          $.ajax({
+            url: "https://api.dev-master.ninja/js/rating",
+            method: "POST",
+            data: {rating: value},
+            success: function(result){
+                console.log(result.result)
+
+                /// Unpaint it red!
+                $(".star").removeClass("red")
+
+
+                /// Paint it red!
+                $(".star").each((index, elem) => {
+                const itemValue = $(elem).attr('data-value')
+                if(itemValue <= value) {
+                $(elem).addClass("red")
+                    }
+                })
+            }
+          })
+          
+          
         })
 
-      });    
+        
+        })
+    
     </script>
   </head>
   <body>
-     <div id="btn" class="button">Click Me!</div>
-     <div class="window">This is the window!</div>
+    <span class="star" data-value="1">*</span>
+    <span class="star" data-value="2">*</span>
+    <span class="star" data-value="3">*</span>
+    <span class="star" data-value="4">*</span>
+    <span class="star" data-value="5">*</span>
   </body>
 </html>
